@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <hr/>
+    <h1>单个数据可以用双花括号直接调用</h1>
+    <h1>{{ name }}</h1>
+     <hr/>
+    <h1>列表可以使用循环逐一取得</h1>
+    {% for item in roles %}
+        <p>{{ item }}</p>
+    {% endfor %}
+    <h1>也可以使用roles.1取得</h1>
+    <p>{{ roles.0 }}</p>
+    <p>{{ roles.1 }}</p>
+    <p>{{ roles.2 }}</p>
+    <hr/>
+    <h1>字典可以使用循环逐一取得</h1>
+    {% for k,v in user_info.items %}
+        <p>{{ k }}={{ v }}</p>
+    {% endfor %}
+    <h1>也可以使用user_info.name直接调用</h1>
+    <p>{{ user_info.name }}</p>
+    <p>{{ user_info.salary }}</p>
+    <p>{{ user_info.role }}</p>
+     <hr/>
+    <h1>嵌套结构根据数据结构自行编写循环逐一取得</h1>
+    {% for item in data_list %}
+        {% for k,v in item.items %}
+            <p>{{ k }}={{ v }}</p>
+        {% endfor %}
+    {% endfor %}
+    <h1>也可以根据结构直接写data_list.0.name调用</h1>
+    <p>{{ data_list.0.name }}</p>
+    <p>{{ data_list.0.salary }}</p>
+    <p>{{ data_list.0.role }}</p>
+    <hr/>
+</body>
+</html>
