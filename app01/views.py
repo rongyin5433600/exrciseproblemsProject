@@ -1,8 +1,9 @@
 from django.shortcuts import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
-import json
 from lxml import etree
+from app01.models import UserInfo
+from app01.models import Department
 
 
 # Create your views here.
@@ -13,11 +14,22 @@ def index(request):
 
 def user_list(request):
     # 会根据app的注册顺序逐一去各个app下得templates文件夹下寻找user_list.html文件
+    # UserInfo.objects.create(name='user1',password='123456',age=23)
+    # UserInfo.objects.create(name='user2', password='123456', age=32)
+    # UserInfo.objects.create(name='user3', password='123456', age=35)
+    # UserInfo.objects.create(name='user4', password='123456', age=25)
     return render(request, "user_list.html")
 
 
 def user_add(request):
-    return render(request, "user_add.html")
+    if request.method == 'GET':
+        return render(request, "user_add.html")
+    else:
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        userage = request.POST.get("userage")
+        UserInfo.objects.create(name=username, password=password, age=userage)
+        return redirect("/user/info")
 
 
 def tpl(request):
@@ -43,3 +55,14 @@ def news(request):
     tree = etree.HTML(res.text)
     li_list = tree.xpath("//div[@class='article']//div[@class='pl2']/a/span/text()")
     return render(request, "news.html", {"list": li_list})
+
+
+def user_info(request):
+    data_list = UserInfo.objects.all()
+    return render(request, 'user_info.html', {"data_list": data_list})
+
+
+def user_delete(request):
+    nid = request.GET.get("nid")
+    UserInfo.objects.filter(id=nid).delete()
+    return redirect("/user/info")

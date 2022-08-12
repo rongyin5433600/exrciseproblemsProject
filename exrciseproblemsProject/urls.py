@@ -23,4 +23,6 @@ urlpatterns = [
     path('user/add', views.user_add),
     path('tpl', views.tpl),
     path('news', views.news),
+    path('user/info', views.user_info),
+    path('user/delete', views.user_delete),
 ]
